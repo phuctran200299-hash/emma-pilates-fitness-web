@@ -1,0 +1,380 @@
+<title>Emma Pearl Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="shared/fx.css">
+<style>
+/* BẢN E - PEARL STUDIO. Concept: nhẹ nhàng kiểu Pilates, nền trắng ngọc trai và be nhạt, xanh khói (dusty blue) làm điểm nhấn,
+   chữ serif thanh mảnh khổ lớn, đường kẻ mảnh, số thứ tự. Không có ảnh người: ảnh đầu trang là ảnh tạm, sẽ thay sau. */
+:root{
+  color-scheme:light;
+  --bg:#f7f4ef; --graphite:#eee9e1; --steel:#e7e2d9; --line:#d9d3c8; --ink:#2a2e35; --mute:#555a62;
+  --bone:#e8eef2; --paper:#fff; --night:#fff; --lime:#5b7189; --accent:#5b7189; --soft:#e7e2d9; --deep:#2a2e35;
+  --disp:'Cormorant Garamond',Georgia,serif; --sans:'Manrope',system-ui,sans-serif; --serif:'Cormorant Garamond',Georgia,serif; --hh:84px;
+}
+body{font:300 15px/1.8 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:500;letter-spacing:-.01em;line-height:1}
+.it{font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;color:var(--lime)}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.kicker{display:inline-flex;align-items:center;gap:12px;font:600 11.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--lime)}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+.sec{padding-block:clamp(70px,9vw,130px)}
+.h2{font-size:clamp(40px,6vw,92px)}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:17px 28px;background:var(--lime);color:var(--night);border:0;border-radius:99px;font:700 12.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .3s,color .3s,gap .3s,transform .3s}
+.btn:hover{background:var(--ink);gap:18px;transform:translateY(-2px)}
+.btn.line{background:none;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(42,46,53,.35)}
+.btn.line:hover{background:var(--ink);color:var(--night)}
+.btn.dark{background:var(--deep);color:#fff}.btn.dark:hover{background:var(--lime)}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(247,244,239,.82);backdrop-filter:blur(16px);border-bottom:1px solid rgba(42,46,53,.08);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.top.hide{transform:translateY(-100%)}
+.top .in{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:30px;height:76px;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.logo img{height:34px;width:auto}
+nav{margin-inline:auto}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+nav a{display:block;padding:10px 15px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);transition:color .3s}
+nav a:hover,nav a[aria-current]{color:var(--lime)}
+.top .btn{padding:14px 22px;font-size:11.5px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);width:46px;height:46px;border-radius:50%;cursor:pointer;color:var(--ink)}
+.burger i,.burger i::before{display:block;width:20px;height:2px;background:currentColor;position:relative;margin:auto}
+.burger i::before{content:"";position:absolute;top:6px;left:0}
+@media(max-width:1020px){
+  .burger{display:block}.top .btn{display:none}
+  nav{position:absolute;left:0;right:0;top:100%;background:var(--graphite);border-bottom:1px solid var(--line);max-height:0;overflow:hidden;transition:max-height .5s;margin:0}
+  nav.open{max-height:480px}nav ul{flex-direction:column;padding:12px max(20px,env(safe-area-inset-left,0px))}nav a{padding:16px 0;border-bottom:1px solid var(--line)}
+}
+
+/* hero */
+.hero{position:relative;min-height:calc(100vh - 76px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:
+  radial-gradient(70% 60% at 82% 16%,rgba(139,165,190,.34),transparent 62%),
+  radial-gradient(60% 70% at 6% 100%,rgba(225,208,182,.5),transparent 60%),
+  linear-gradient(180deg,#faf8f4,#f0ebe2)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(42,46,53,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(42,46,53,.055) 1px,transparent 1px);background-size:88px 88px;mask-image:linear-gradient(180deg,#000 10%,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000 10%,transparent 85%)}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-block:clamp(110px,14vh,170px) 0}
+.hero .tag{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:clamp(20px,3vw,36px)}
+.hero .tag span{font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.hero h1{font-size:clamp(64px,12.6vw,220px);line-height:.9;letter-spacing:-.025em;font-weight:500}
+.hero h1 span{display:block;overflow:hidden;padding:.06em 0 .16em;margin-bottom:-.12em}
+.hero h1 span>b{display:block;font-weight:500;animation:up 1.1s cubic-bezier(.22,1,.36,1) both}
+.hero h1 span:nth-child(2)>b{animation-delay:.12s}.hero h1 span:nth-child(3)>b{animation-delay:.24s}
+.hero h1 .it{font-size:1em}
+@keyframes up{from{transform:translateY(105%)}}
+.hero .row{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,80px);align-items:end;margin-top:clamp(28px,4vw,56px);padding-bottom:clamp(30px,4vw,50px)}
+.hero .row p{margin:0 0 22px;max-width:440px;font-size:16px;color:var(--mute)}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.stats div{padding:20px clamp(14px,2vw,28px) 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.6)}
+.stats b{display:block;font:500 clamp(40px,5vw,72px)/.95 var(--disp);color:var(--lime)}
+.stats small{display:block;margin-top:8px;font-size:12px;line-height:1.4;color:var(--mute)}
+.marq{overflow:hidden;padding:18px 0;background:var(--lime);color:var(--night)}
+.marq .marqrow{gap:42px;padding-right:42px;font:700 clamp(26px,3.4vw,46px)/1 var(--disp);text-transform:uppercase;letter-spacing:.01em}
+.marq .marqrow span:nth-child(even){font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none}
+
+/* about */
+.about{display:grid;grid-template-columns:4fr 8fr;gap:clamp(28px,6vw,100px);align-items:start}
+.about h2{margin-top:24px}
+.about .lead{font:500 clamp(26px,3vw,42px)/1.25 var(--disp);letter-spacing:-.005em;margin:0 0 28px;color:var(--ink)}
+.about p{margin:0 0 16px;max-width:620px;color:var(--mute);font-size:16px}
+.about .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:38px;border-top:1px solid var(--line)}
+.about .facts div{padding:20px 20px 0 0}
+.about .facts b{font:600 21px/1.1 var(--disp);color:var(--lime);display:block;margin-bottom:6px}
+.about .facts small{font-size:13px;color:var(--mute);line-height:1.5;display:block}
+
+/* services: list rows */
+.svcs{border-top:1px solid var(--line);margin-top:clamp(34px,5vw,60px)}
+.svc{border-bottom:1px solid var(--line);position:relative;background:transparent;transition:background .45s}
+.svc .hd{width:100%;display:grid;grid-template-columns:70px 1fr 40px;gap:20px;align-items:center;padding:clamp(22px,3vw,38px) 0;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.svc .no{font:600 14px/1 var(--sans);letter-spacing:.14em;color:var(--mute);transition:color .4s}
+.svc h3{font-size:clamp(38px,5.6vw,88px);line-height:1;transition:transform .5s cubic-bezier(.22,1,.36,1),color .4s}
+.svc .ar{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:transform .5s,background .4s,border-color .4s,color .4s}
+.svc .ar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.svc .bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s cubic-bezier(.22,1,.36,1)}
+.svc .bd>div{overflow:hidden;min-height:0}
+.svc .bd .cn{display:grid;grid-template-columns:70px 1fr 1fr;gap:20px;padding-bottom:clamp(24px,3vw,40px)}
+.svc .bd p{margin:0;grid-column:2;max-width:460px;font-size:16px;color:var(--mute);transition:color .4s}
+.svc .bd .side{display:grid;gap:18px;align-content:start;justify-items:start}
+.svc .tags{display:flex;gap:8px;flex-wrap:wrap}
+.svc .tags span{font-size:12.5px;padding:8px 14px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.svc.on .bd,.svc:hover .bd,.svc:focus-within .bd{grid-template-rows:1fr}
+.svc.on h3,.svc:hover h3{color:var(--lime);transform:translateX(14px)}
+.svc.on .ar,.svc:hover .ar{background:var(--lime);border-color:var(--lime);color:var(--night);transform:rotate(-45deg)}
+.svc.on .no,.svc:hover .no{color:var(--lime)}
+.svc.on p,.svc:hover p{color:var(--ink)}
+.more{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.more a{padding:12px 20px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line);font-size:13.5px;font-weight:500;transition:background .3s,color .3s}
+.more a:hover{background:var(--lime);color:var(--night)}
+@media(max-width:780px){.svc .hd{grid-template-columns:36px 1fr 36px;gap:12px}.svc .ar{width:36px;height:36px}.svc .bd .cn{grid-template-columns:36px 1fr}.svc .bd p{grid-column:2}.svc .bd .side{grid-column:2}}
+@media(hover:none){.svc:hover .bd{grid-template-rows:0fr}.svc:hover h3{color:inherit;transform:none}.svc:hover .ar{background:none;border-color:var(--line);color:inherit;transform:none}.svc:hover .no{color:var(--mute)}.svc:hover p{color:var(--mute)}.svc.on .bd{grid-template-rows:1fr}.svc.on h3{color:var(--lime)}.svc.on .ar{background:var(--lime);border-color:var(--lime);color:var(--night);transform:rotate(-45deg)}.svc.on p{color:var(--ink)}}
+
+/* machines: bone block */
+.mach{background:var(--bone);color:var(--ink)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:clamp(34px,5vw,60px);border-top:1px solid rgba(42,46,53,.14);border-left:1px solid rgba(42,46,53,.14)}
+.pc{position:relative;min-width:0;display:grid;grid-template-rows:1fr auto;aspect-ratio:3/4.3;padding:20px;border-right:1px solid rgba(42,46,53,.14);border-bottom:1px solid rgba(42,46,53,.14);transition:background .45s}
+.pc:hover{background:var(--paper)}
+.pc .sale{position:absolute;left:20px;top:20px;font:700 11px/1 var(--sans);letter-spacing:.1em;padding:7px 10px;background:var(--deep);color:#fff;border-radius:99px;z-index:1}
+.pc img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;padding:34px 0 10px;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.pc:hover img{transform:scale(1.07) translateY(-6px)}
+.pc h3{font-size:clamp(22px,2vw,30px);line-height:1;margin-bottom:10px;min-height:2em}
+.pc .pr{display:flex;justify-content:space-between;align-items:center;font:600 14px/1 var(--sans);padding-top:12px;border-top:1px solid rgba(42,46,53,.14)}
+.pc .pr i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--deep);color:#fff;display:grid;place-items:center;transition:transform .4s}
+.pc:hover .pr i{transform:rotate(-45deg)}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}.pc{aspect-ratio:3/4}}
+@media(max-width:700px){.cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.cards::-webkit-scrollbar{display:none}.pc{flex:0 0 72%;scroll-snap-align:start;aspect-ratio:3/4}}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(34px,5vw,60px);border-top:1px solid var(--line)}
+.wt{padding:clamp(24px,3vw,40px) clamp(18px,2vw,30px) clamp(24px,3vw,40px) 0;display:grid;gap:18px;align-content:start;border-right:1px solid var(--line);margin-right:clamp(18px,2vw,30px)}
+.wt:last-child{border-right:0;margin-right:0}
+.wt svg{width:42px;height:42px;stroke:var(--lime);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.wt .n{font:600 12px/1 var(--sans);letter-spacing:.18em;color:var(--mute)}
+.wt h3{font-size:clamp(28px,2.6vw,38px)}
+.wt p{margin:0;color:var(--mute);font-size:14.5px;line-height:1.7}
+@media(max-width:1000px){.why{grid-template-columns:1fr 1fr}.wt{border-right:0;margin-right:0;border-bottom:1px solid var(--line)}}
+@media(max-width:600px){.why{grid-template-columns:1fr}}
+
+/* branches */
+.sites{background:var(--graphite)}
+.brs{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(34px,5vw,60px);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.br{position:relative;display:grid;gap:14px;align-content:space-between;min-height:clamp(320px,34vw,440px);padding:clamp(24px,3vw,40px);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .5s,color .5s;overflow:hidden}
+.br:hover{background:var(--lime);color:var(--night)}
+.br .cs{font:600 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--lime);transition:color .5s}
+.br h3{font-size:clamp(46px,5vw,80px);line-height:.95;margin:18px 0 16px}
+.br p{margin:0;max-width:300px;color:var(--mute);font-size:14.5px;transition:color .5s}
+.br .meta{display:grid;gap:4px;margin-top:22px;padding-top:16px;border-top:1px solid currentColor;font-size:13px;opacity:.85}
+.br:hover .cs,.br:hover p{color:var(--night)}
+@media(max-width:900px){.brs{grid-template-columns:1fr}.br{min-height:0}}
+
+/* feedback pinned rail */
+.fb{--pinh:240vh;--hh:84px}
+.fb .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.fbbar{height:2px;background:var(--line);margin-bottom:28px;overflow:hidden}
+.fbbar i{display:block;height:100%;background:var(--lime);transform:scaleX(0);transform-origin:left}
+.fb .track{padding-left:max(20px,calc((100vw - 1320px)/2 + 20px));padding-right:40px;gap:16px}
+.fc{flex:0 0 min(300px,76vw);display:grid;gap:12px;border:0;background:none;padding:0;text-align:left;font:inherit;color:inherit}
+.fc .ph{aspect-ratio:4/5;background:var(--steel);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;align-content:center;gap:10px;color:var(--mute);font:500 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.fc .ph svg{width:30px;height:30px;stroke:var(--lime);fill:none;stroke-width:1.4}
+.fc small{font:600 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+@media(max-width:900px){.fbbar{display:none}.fb .track{padding-inline:20px}}
+
+/* news */
+.nl{border-top:1px solid var(--line);margin-top:clamp(34px,5vw,60px)}
+.nr{display:grid;grid-template-columns:70px 130px 1fr 40px;gap:20px;align-items:center;padding:clamp(22px,2.6vw,34px) 0;border-bottom:1px solid var(--line);transition:padding .5s cubic-bezier(.22,1,.36,1),background .4s}
+.nr:hover{padding-left:18px;background:var(--graphite)}
+.nr .no{font:600 14px/1 var(--sans);letter-spacing:.14em;color:var(--mute)}
+.nr .k{font:600 11.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
+.nr h3{font-size:clamp(26px,2.7vw,40px);line-height:1.05}
+.nr p{margin:8px 0 0;color:var(--mute);font-size:14px;text-transform:none;font-family:var(--sans);font-weight:300;letter-spacing:0}
+.nr .ar{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .3s,color .3s,transform .4s}
+.nr:hover .ar{background:var(--lime);color:var(--night);border-color:var(--lime);transform:rotate(-45deg)}
+.nr .ar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+@media(max-width:780px){.nr{grid-template-columns:1fr 36px;gap:10px 12px}.nr .no,.nr .k{grid-column:1}.nr>div{grid-column:1}.nr .ar{grid-column:2;grid-row:1/4;width:36px;height:36px}}
+
+/* CTA + footer */
+.cta{background:#dde6ed;color:var(--ink);text-align:left;padding:clamp(70px,10vw,150px) 0;position:relative;overflow:hidden}
+.cta .kicker{color:var(--lime)}
+.cta h2{font-size:clamp(56px,10.5vw,180px);line-height:.92;margin:24px 0 clamp(26px,3vw,40px)}
+.cta h2 .it{color:var(--lime)}
+.cta .row{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap}
+.cta p{margin:0;max-width:380px;font-size:16px}
+.cta form{display:flex;gap:8px;flex:1 1 440px;max-width:600px;background:#fff;border-radius:99px;padding:8px;flex-wrap:wrap}
+.cta input{flex:1 1 200px;min-width:0;padding:14px 22px;border:0;background:none;color:var(--ink);font:inherit;outline:none}
+.cta input::placeholder{color:var(--mute)}
+.cta .btn{background:var(--lime);color:#fff}.cta .btn:hover{background:var(--deep)}
+.thanks{flex-basis:100%;margin:0 0 6px 22px;font-size:13px;color:var(--lime)}
+footer{padding-block:72px 32px;font-size:13px;color:var(--mute);border-top:1px solid var(--line)}
+footer .grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:40px}
+footer h4{margin:0 0 18px;font:600 18px/1 var(--disp);letter-spacing:.02em;color:var(--ink)}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+footer .logo img{height:40px}.copyright{margin-top:56px;font-size:12px}
+.float{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));display:grid;gap:8px;z-index:40}
+.float a{width:50px;height:50px;border-radius:50%;background:var(--lime);color:var(--night);display:grid;place-items:center;font:700 10.5px/1 var(--sans);box-shadow:0 8px 24px rgba(42,46,53,.25)}
+.lb{background:rgba(247,244,239,.97)}.lb button{color:var(--ink);border-color:var(--ink)}
+.note{background:#dde6ed;color:var(--ink)}
+
+@media(max-width:900px){.about{grid-template-columns:1fr}.hero .row{grid-template-columns:1fr}footer .grid{grid-template-columns:1fr 1fr}.about .facts{grid-template-columns:1fr}}
+@media(max-width:560px){footer .grid{grid-template-columns:1fr}.stats b{font-size:36px}}
+@media(prefers-reduced-motion:reduce){.hero h1 span>b{animation:none}.svc .bd{transition:none}}
+</style>
+
+<div class="note">Bản E · Pearl Studio. Nội dung lấy từ website hiện tại của Emma Pilates. Ảnh đầu trang và ảnh học viên sẽ thay sau, chỉ giữ ảnh máy tập.</div>
+<div class="prog" id="prog"></div>
+
+<header class="top" id="top">
+  <div class="in">
+    <a href="#home" class="logo" data-go aria-label="Emma Pilates - Trang chủ"><img src="img/logo-t.png" alt="Emma Pilates &amp; Fitness" width="176" height="51"></a>
+    <nav id="nav" aria-label="Chính">
+      <ul>
+        <li><a href="#about" data-go>Giới thiệu</a></li><li><a href="#services" data-go>Dịch vụ</a></li>
+        <li><a href="#machines" data-go>Máy tập</a></li><li><a href="#why" data-go>Vì sao Emma</a></li>
+        <li><a href="#branch" data-go>Cơ sở</a></li><li><a href="#news" data-go>Tin tức</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="#contact" data-go>Tập thử miễn phí</a>
+    <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false"><i></i></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <img data-hero src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" alt="" width="1600" height="668">
+  <div class="wrap" data-herotxt>
+    <div class="tag"><span class="kicker">Emma Pilates &amp; Fitness</span><span>Hà Nội · Hải Phòng</span></div>
+    <h1 aria-label="Làm chủ cơ thể của bạn"><span><b>Làm chủ</b></span><span><b><span class="it" style="display:inline">cơ thể</span></b></span><span><b>của bạn</b></span></h1>
+    <div class="row">
+      <div>
+        <p>Không gian Pilates trắng xanh lấy cảm hứng từ Santorini, đồng hành cùng Health Coach chuẩn quốc tế.</p>
+        <div class="acts"><a class="btn" href="#contact" data-go>Đặt lịch tập thử <span>→</span></a><a class="btn line" href="#services" data-go>Xem dịch vụ</a></div>
+      </div>
+      <div class="stats">
+        <div><b><span data-count="100">100</span>h</b><small>Trợ giảng trước khi nhận lớp</small></div>
+        <div><b><span data-count="1000">1.000</span>+</b><small>Phụ nữ đã thay đổi cơ thể</small></div>
+        <div><b>PMA</b><small>Chứng chỉ Educator</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="about">
+  <div class="wrap about">
+    <div><span class="kicker rv">01 · Câu chuyện</span><h2 class="h2" data-split>Đánh thức vẻ đẹp tiềm ẩn</h2></div>
+    <div>
+      <p class="lead rv">Dùng tâm huyết để thay đổi cuộc sống của một triệu người dân Việt Nam trở nên hạnh phúc hơn qua bộ môn Pilates.</p>
+      <p class="rv">Emma Pilates xây dựng hệ thống chăm sóc sức khỏe với không gian thư giãn, yên tĩnh và sang trọng, cùng đội ngũ HLV tận tâm, được đào tạo chuẩn quốc tế.</p>
+      <div class="facts rv">
+        <div><b>Private</b><small>Mỗi phòng một loại thiết bị riêng</small></div>
+        <div><b>Care Pilates</b><small>100% máy nhập khẩu Hàn Quốc</small></div>
+        <div><b>PMA</b><small>Educator chuẩn quốc tế</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="services" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker rv">02 · Dịch vụ</span><h2 class="h2" style="margin-top:22px" data-split>Chọn lộ trình của bạn</h2></div></div>
+    <div class="svcs">
+      <div class="svc on"><button class="hd" aria-expanded="true"><span class="no">01</span><h3>Cải thiện vóc dáng</h3><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></button>
+        <div class="bd"><div><div class="cn"><p>Pilates giúp cải thiện vóc dáng hiệu quả, cho vòng eo thon gọn và thân hình cân đối.</p><div class="side"><div class="tags"><span>Tăng sự dẻo dai</span><span>Giảm mỡ, giữ dáng</span><span>Thu gọn vòng eo</span></div><a class="btn" href="#contact" data-go>Đăng ký tập thử</a></div></div></div></div></div>
+      <div class="svc"><button class="hd" aria-expanded="false"><span class="no">02</span><h3>Pilates Bầu</h3><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></button>
+        <div class="bd"><div><div class="cn"><p>Chuỗi bài tập thiết kế riêng cho phụ nữ mang thai, an toàn và nhẹ nhàng cho mẹ và bé.</p><div class="side"><a class="btn" href="#contact" data-go>Đăng ký tập thử</a></div></div></div></div></div>
+      <div class="svc"><button class="hd" aria-expanded="false"><span class="no">03</span><h3>Pilates Kid</h3><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></button>
+        <div class="bd"><div><div class="cn"><p>Ở độ tuổi dậy thì, việc tạo áp lực cho xương giúp hỗ trợ tăng chiều cao của trẻ tốt hơn.</p><div class="side"><a class="btn" href="#contact" data-go>Đăng ký tập thử</a></div></div></div></div></div>
+      <div class="svc"><button class="hd" aria-expanded="false"><span class="no">04</span><h3>Pilates Sau Sinh</h3><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></button>
+        <div class="bd"><div><div class="cn"><p>Phục hồi cơ thể sau kỳ sinh nở với các bài tập nhẹ nhàng, an toàn.</p><div class="side"><a class="btn" href="#contact" data-go>Đăng ký tập thử</a></div></div></div></div></div>
+    </div>
+    <div class="more rv"><a href="#contact" data-go>Cải thiện bệnh lý</a><a href="#contact" data-go>Pilates 1:1</a><a href="#contact" data-go>Pilates 1:2 – 1:3</a></div>
+  </div>
+</section>
+
+<section class="sec mach" id="machines">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker rv">03 · Máy tập</span><h2 class="h2" style="margin-top:22px" data-split>Thiết bị <span class="it">nhập khẩu</span></h2></div><a class="btn dark rv" href="#machines" data-go>Xem tất cả máy tập</a></div>
+    <div class="cards">
+      <a class="pc" href="#machines" data-go><span class="sale">-28%</span><img src="img/p-reformer.jpg" alt="Máy tập Pilates Reformer" width="830" height="607"><div><h3>Máy tập Pilates Reformer</h3><div class="pr"><span>39.000.000₫</span><i>→</i></div></div></a>
+      <a class="pc" href="#machines" data-go><span class="sale">-31%</span><img src="img/p-cadillac.jpg" alt="Máy tập Cadillac" width="600" height="600"><div><h3>Máy tập Cadillac</h3><div class="pr"><span>32.000.000₫</span><i>→</i></div></div></a>
+      <a class="pc" href="#machines" data-go><span class="sale">-25%</span><img src="img/p-barrel.jpg" alt="Máy tập Ladder Barrel" width="900" height="600"><div><h3>Ladder Barrel</h3><div class="pr"><span>14.500.000₫</span><i>→</i></div></div></a>
+      <a class="pc" href="#machines" data-go><span class="sale">-23%</span><img src="img/p-spine.jpg" alt="Máy tập Spine Corrector" width="830" height="607"><div><h3>Spine Corrector</h3><div class="pr"><span>2.210.300₫</span><i>→</i></div></div></a>
+      <a class="pc" href="#machines" data-go><span class="sale">-25%</span><img src="img/p-chair.jpg" alt="Máy tập Wunda Chair" width="830" height="607"><div><h3>Wunda Chair</h3><div class="pr"><span>14.500.000₫</span><i>→</i></div></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker rv">04 · Vì sao Emma</span><h2 class="h2" style="margin-top:22px" data-split>Tiên phong đưa Pilates về Việt Nam</h2></div></div>
+    <div class="why">
+      <div class="wt rv"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="n">01</span><h3>Không gian Private</h3><p>Mỗi phòng tập với một loại thiết bị riêng giúp nâng cao trải nghiệm và hiệu quả luyện tập.</p></div>
+      <div class="wt rv" style="--d:.08s"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><span class="n">02</span><h3>Sản phẩm an toàn</h3><p>100% máy móc nhập khẩu từ thương hiệu Care Pilates Hàn Quốc.</p></div>
+      <div class="wt rv" style="--d:.16s"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/></svg><span class="n">03</span><h3>Không gian sang trọng</h3><p>Lấy cảm hứng từ đảo Santorini, tông trắng - xanh tinh khiết.</p></div>
+      <div class="wt rv" style="--d:.24s"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5"/></svg><span class="n">04</span><h3>HLV chuẩn Quốc tế</h3><p>Educator có chứng chỉ PMA, toàn bộ Health Coach tốt nghiệp khóa đào tạo chuẩn quốc tế.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sites" id="branch">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker rv">05 · Hệ thống cơ sở</span><h2 class="h2" style="margin-top:22px" data-split>Gặp Emma gần bạn</h2></div></div>
+    <div class="brs">
+      <a class="br rv" href="#contact" data-go><div><span class="cs">Cs1</span><h3>Hà Đông</h3><p>HM01B-3, Hoàng Thành Villas, Khu đô thị mới, Hà Đông, Hà Nội</p></div><div class="meta"><span>06:00 – 21:00, Thứ 2 – Thứ 7</span><span>Hotline 0938 831 661</span></div></a>
+      <a class="br rv" href="#contact" data-go style="--d:.1s"><div><span class="cs">Cs2</span><h3>Tây Hồ Tây</h3><p>LK B21 Embassy Garden, KĐT Tây Hồ Tây, phường Xuân Tảo, Bắc Từ Liêm, Hà Nội</p></div><div class="meta"><span>06:00 – 21:00, Thứ 2 – Thứ 7</span><span>Hotline 0938 831 661</span></div></a>
+      <a class="br rv" href="#contact" data-go style="--d:.2s"><div><span class="cs">Cs3</span><h3>Hải Phòng</h3><p>10 Manhattan 6, Khu Đô Thị Paris Imperia, Hồng Bàng, Hải Phòng</p></div><div class="meta"><span>06:00 – 21:00, Thứ 2 – Thứ 7</span><span>Hotline 0938 831 661</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec fb" id="fb" data-pin>
+  <div class="stick">
+    <div class="wrap">
+      <div class="head"><div><span class="kicker">06 · Feedback</span><h2 class="h2" style="margin-top:22px">Học viên nói gì về <span class="it">Emma</span></h2></div></div>
+      <div class="fbbar"><i data-pinbar></i></div>
+    </div>
+    <div class="track">
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Tô Thu Hà</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Nguyễn Thị Trang</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Hà Thanh</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Lê Linh Chi</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Tống Linh Chi</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Nguyễn Thị Mai Anh</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Khánh Linh</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Thảo Giang</small></div>
+      <div class="fc"><div class="ph"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Ảnh học viên</div><small>HV Đỗ Thảo Chi</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="news" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="kicker rv">07 · Tin tức</span><h2 class="h2" style="margin-top:22px" data-split>Hướng dẫn làm đẹp</h2></div></div>
+    <div class="nl">
+      <a class="nr rv" href="#news" data-go><span class="no">01</span><span class="k">Pilates</span><div><h3>Pilates giúp tăng hệ miễn dịch như thế nào?</h3><p>Bạn có muốn nâng cao sức đề kháng trong giai đoạn dịch Covid diễn biến...</p></div><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      <a class="nr rv" href="#news" data-go><span class="no">02</span><span class="k">Sức khỏe</span><div><h3>Khắc phục tình trạng chân vòng kiềng bằng 5 bài tập chân</h3><p>Hướng dẫn chi tiết từ Health Coach của Emma.</p></div><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+      <a class="nr rv" href="#news" data-go><span class="no">03</span><span class="k">Bài tập</span><div><h3>Pilates original Matwork. Corkscrew</h3><p>Động tác Corkscrew nguyên bản trong Return to Life through Contrology.</p></div><span class="ar"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="kicker">Đặt lịch</span>
+    <h2>Làm chủ <span class="it">cơ thể</span><br>của bạn</h2>
+    <div class="row">
+      <p class="rv">Đăng ký miễn phí 01 buổi đo body đánh giá tại Emma, cùng HLV chuyên nghiệp.</p>
+      <form id="leadForm" class="rv"><input id="phone" type="tel" placeholder="Để lại số điện thoại" aria-label="Số điện thoại" required><button class="btn" type="submit">Đăng ký ngay</button><p class="thanks" id="thanks" hidden>Cảm ơn bạn. Emma sẽ gọi lại sớm nhất (demo, chưa gửi dữ liệu).</p></form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div><a class="logo" href="#home" data-go><img src="img/logo-t.png" alt="Emma Pilates &amp; Fitness" width="176" height="51"></a><p style="max-width:320px;margin-top:20px">Dùng tâm huyết để thay đổi cuộc sống của một triệu người dân Việt Nam trở nên hạnh phúc hơn qua bộ môn Pilates.</p></div>
+      <div><h4>KHÁM PHÁ</h4><ul><li>Giới thiệu</li><li>Dịch vụ</li><li>Máy tập</li><li>Đào tạo</li><li>Tuyển dụng</li></ul></div>
+      <div><h4>DỊCH VỤ</h4><ul><li>Cải thiện vóc dáng</li><li>Pilates Kid</li><li>Pilates Bầu</li><li>Pilates Sau Sinh</li></ul></div>
+      <div><h4>LIÊN HỆ</h4><ul><li>0938 831 661</li><li>emmapilatesvietnam@gmail.com</li><li>06:00 – 21:00, Thứ 2 – Thứ 7</li></ul></div>
+    </div>
+    <div class="copyright">© Emma Pilates. Bản mockup thiết kế.</div>
+  </div>
+</footer>
+
+<div class="float"><a href="#contact" data-go>Zalo</a><a href="#contact" data-go>Gọi</a></div>
+<div class="veil" id="veil"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Xem ảnh lớn"><button aria-label="Đóng">×</button><img id="lbImg" alt=""></div>
+<script src="shared/fx.js"></script>
+<script>
+/* E only: service rows (click to open, hover on desktop) */
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('.svc'));
+  rows.forEach(function(r){
+    r.querySelector('.hd').addEventListener('click',function(){
+      var open=r.classList.contains('on');
+      rows.forEach(function(x){x.classList.remove('on');x.querySelector('.hd').setAttribute('aria-expanded','false')});
+      if(!open){r.classList.add('on');r.querySelector('.hd').setAttribute('aria-expanded','true')}
+    });
+  });
+})();
+</script>

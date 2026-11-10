@@ -1,0 +1,21 @@
+# Bản sao lưu tạm khi sửa file
+*.bak
+
+# File dựng tạm để kiểm thử bằng trình duyệt, sinh lại được bất cứ lúc nào
+_probe*.html
+_p.html
+_d.html
+_cc.html
+_fr.html
+_preview*.html
+
+# File tạm của Office và hệ điều hành
+~$*
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Môi trường Python nếu có
+__pycache__/
+*.pyc
+.venv/

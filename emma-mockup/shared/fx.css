@@ -1,0 +1,46 @@
+/* shared motion layer for variants C, D, E (WP: becomes emma.css / emma.js in child theme) */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.ph{position:relative;overflow:hidden;background:var(--soft)}
+.ph img.zoom{position:absolute;left:-12%;top:-12%;width:124%;height:124%;object-fit:cover;max-width:none;transition:scale 1.2s cubic-bezier(.22,1,.36,1);will-change:transform}
+.ph.contain img.zoom{object-fit:contain;left:-4%;top:-4%;width:108%;height:108%}
+.zoomable:hover img.zoom{scale:1.05}
+.mul img{mix-blend-mode:multiply}
+.prog{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;z-index:90}
+.veil{position:fixed;inset:0;background:var(--bg);z-index:70;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.22,1,.36,1)}
+.veil.on{opacity:1}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(255,255,255,.96);display:none;place-items:center;padding:24px}
+.lb.on{display:grid}
+.lb img{max-height:90vh;max-width:min(92vw,860px);width:auto;height:auto;cursor:zoom-out}
+.lb button{position:absolute;top:16px;right:16px;color:var(--ink);background:none;border:1px solid var(--ink);width:44px;height:44px;cursor:pointer;font-size:20px}
+.note{background:var(--ink);color:#fff;text-align:center;font:400 12px/1.5 var(--sans);letter-spacing:.04em;padding:8px 16px}
+/* reveal layer */
+.rv{opacity:.15;transform:translate(var(--tx,0px),34px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.2em 0 .14em;margin:-.2em 0 -.14em}
+.w>span{display:inline-block;transform:translateY(110%);transition:transform 1.1s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i)*.07s)}
+.sp.go .w>span{transform:none}
+.cur{clip-path:inset(0 0 100% 0);transition:clip-path 1.3s cubic-bezier(.77,0,.18,1)}
+.cur.in{clip-path:inset(0 0 0 0)}
+.sw{opacity:var(--swmin,.16)}
+/* pinned horizontal rail: <section data-pin><div class=stick>...<div class=track> */
+[data-pin] .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+[data-pin] .track::-webkit-scrollbar{display:none}
+[data-pin] .track>*{scroll-snap-align:start;flex:0 0 auto}
+@media(min-width:901px){
+  [data-pin]{height:var(--pinh,280vh)}
+  [data-pin] .stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:var(--hh,90px)}
+  [data-pin] .track{overflow:visible;scroll-snap-type:none;width:max-content;will-change:transform}
+}
+.marqrow{display:flex;width:max-content;white-space:nowrap;will-change:transform}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}.veil{display:none}
+  .w>span{transform:none;transition:none}.cur{clip-path:none;transition:none}.sw{opacity:1}
+  [data-pin]{height:auto!important}[data-pin] .stick{position:static;height:auto;padding-top:0}
+  [data-pin] .track{overflow-x:auto;width:auto;scroll-snap-type:x mandatory}
+}
