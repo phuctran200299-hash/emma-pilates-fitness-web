@@ -19,3 +19,6 @@ desktop.ini
 __pycache__/
 *.pyc
 .venv/
+
+# Bản clone của công cụ Hallmark (repo riêng, bên thứ ba)
+hallmark/
