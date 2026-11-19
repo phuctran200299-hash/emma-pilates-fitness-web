@@ -1,39 +1,47 @@
-/* Refract · the light: water caustics drawn live behind the hero (decoration only).
-   Rendered at low resolution and scaled up by the browser, so the net stays soft.
-   Pauses off screen and in a background tab; with reduced motion it paints one still frame. */
+/* Refract · the light: water caustics drawn live on every canvas.light (decoration only).
+   Each canvas renders at low resolution and the browser scales it up, so the net stays soft.
+   A canvas only animates while it is on screen (hidden pages and closed dialogs cost nothing);
+   with reduced motion each one paints a single still frame. */
 (function () {
   'use strict';
-  var canvas = document.querySelector('.hero .light');
-  if (!canvas || !canvas.getContext) return;
-  var ctx = canvas.getContext('2d', { willReadFrequently: true });
-  if (!ctx) return;
+  var probe = document.createElement('canvas');
+  var pctx = probe.getContext && probe.getContext('2d', { willReadFrequently: true });
+  if (!pctx) return;
 
-  /* read two theme tokens as RGB by painting them once */
   function tokenRGB(name, fallback) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
-    canvas.width = 1; canvas.height = 1;
-    ctx.clearRect(0, 0, 1, 1);
-    ctx.fillStyle = fallback; ctx.fillStyle = v;
-    ctx.fillRect(0, 0, 1, 1);
-    var d = ctx.getImageData(0, 0, 1, 1).data;
+    probe.width = 1; probe.height = 1;
+    pctx.clearRect(0, 0, 1, 1);
+    pctx.fillStyle = fallback; pctx.fillStyle = v;
+    pctx.fillRect(0, 0, 1, 1);
+    var d = pctx.getImageData(0, 0, 1, 1).data;
     return [d[0], d[1], d[2]];
   }
   var shade = tokenRGB('--color-shade', 'rgb(180,222,224)');
   var deep = tokenRGB('--color-shade-2', 'rgb(99,199,200)');
   var light = tokenRGB('--color-light', 'rgb(254,254,252)');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TAU = 6.28318530718, start = performance.now();
+  var now = function () { return 23 + (performance.now() - start) / 1000 * 0.42; };
 
-  var W = 150, H = 90, img, buf;
-  function size() {
-    var r = canvas.getBoundingClientRect();
-    var aspect = r.width && r.height ? r.height / r.width : 0.6;
-    W = 150; H = Math.max(40, Math.round(W * aspect));
-    canvas.width = W; canvas.height = H;
-    img = ctx.createImageData(W, H); buf = img.data;
+  function Light(canvas) {
+    this.c = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.W = 0; this.H = 0; this.visible = false;
   }
-
-  var TAU = 6.28318530718;
-  function frame(time) {
-    var inten = 0.005, x, y, n, px, py, ix, iy, t, c, b, o = 0;
+  Light.prototype.size = function () {
+    var r = this.c.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    var W = 150, H = Math.max(30, Math.round(W * r.height / r.width));
+    if (W !== this.W || H !== this.H) {
+      this.W = W; this.H = H;
+      this.c.width = W; this.c.height = H;
+      this.img = this.ctx.createImageData(W, H);
+    }
+    return true;
+  };
+  Light.prototype.frame = function (time) {
+    var W = this.W, H = this.H, buf = this.img.data, inten = 0.005, o = 0, x, y, n, px, py, ix, iy, t, c, b;
     for (y = 0; y < H; y++) {
       for (x = 0; x < W; x++) {
         px = ((x / W) * 1.6 * TAU) % TAU - 250;
@@ -51,7 +59,6 @@
         c = 1.17 - Math.pow(c, 1.4);
         b = Math.pow(Math.abs(c), 7);
         if (b > 1) b = 1;
-        /* deep teal in the troughs, shade on the floor, near white on the bright seams */
         var lo = 0.35 + 0.65 * Math.min(1, b * 3);
         var r = deep[0] + (shade[0] - deep[0]) * lo, g = deep[1] + (shade[1] - deep[1]) * lo, bl = deep[2] + (shade[2] - deep[2]) * lo;
         buf[o] = r + (light[0] - r) * b;
@@ -61,28 +68,51 @@
         o += 4;
       }
     }
-    ctx.putImageData(img, 0, 0);
-  }
+    this.ctx.putImageData(this.img, 0, 0);
+  };
 
-  size();
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var start = performance.now(), visible = true, raf = 0, last = 0;
-  frame(23);
-  if (reduce) return;
-
-  function loop(now) {
+  var all = [], raf = 0, last = 0;
+  function loop(ts) {
     raf = 0;
-    if (!visible || document.hidden) return;
-    if (now - last > 40) { last = now; frame(23 + (now - start) / 1000 * 0.42); }
+    if (document.hidden) return;
+    var live = all.filter(function (l) { return l.visible; });
+    if (!live.length) return;
+    if (ts - last > 40) {
+      last = ts;
+      var tm = now();
+      live.forEach(function (l) { if (l.size()) l.frame(tm); });
+    }
     raf = requestAnimationFrame(loop);
   }
-  function wake() { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(loop); }
+  function wake() { if (!raf && !reduce) raf = requestAnimationFrame(loop); }
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; wake(); }).observe(canvas);
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var l = e.target.__light;
+      l.visible = e.isIntersecting;
+      if (l.visible && l.size()) l.frame(now());
+    });
+    wake();
+  }) : null;
+
+  function attach(canvas) {
+    if (canvas.__light) return;
+    var l = new Light(canvas);
+    canvas.__light = l;
+    all.push(l);
+    if (io) io.observe(canvas);
+    else { l.visible = true; if (l.size()) l.frame(now()); }
   }
+  function scan() { Array.prototype.forEach.call(document.querySelectorAll('canvas.light'), attach); }
+
+  scan();
+  /* pages are rendered by emma.js after load: pick up canvases it adds */
+  new MutationObserver(function () { scan(); }).observe(document.getElementById('main') || document.body, { childList: true, subtree: true });
   document.addEventListener('visibilitychange', wake);
   var rt;
-  addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { size(); frame(23 + (performance.now() - start) / 1000 * 0.42); }, 150); });
+  addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { var tm = now(); all.forEach(function (l) { if (l.visible && l.size()) l.frame(tm); }); }, 150);
+  });
   wake();
 })();

@@ -221,10 +221,22 @@
     ],
 
     trainers: [
-      { mono: 'A', name: 'Nguyễn T. A', role: 'Giảng viên trưởng', sub: 'Giải phẫu, Reformer, Chấm thi tốt nghiệp' },
-      { mono: 'B', name: 'Nguyễn T. B', role: 'Giảng viên', sub: 'Mat work, Thiết kế giáo án' },
-      { mono: 'K', name: 'HLV 03', role: 'Giảng viên Barre K', sub: 'Kỹ thuật barre, Điều phối lớp nhóm' },
-      { mono: 'T', name: 'HLV 07', role: 'Trợ giảng chính', sub: 'Giám sát 100 giờ trợ giảng' }
+      { id: 't1', mono: 'A', name: 'Nguyễn T. A', role: 'Giảng viên trưởng', years: '9 năm',
+        quote: 'Một giáo án tốt bắt đầu từ ba mươi giây nhìn học viên đứng thẳng, trước khi chạm vào máy.',
+        teach: 'Giải phẫu ứng dụng, Reformer, chấm thi tốt nghiệp', certs: ['PMA Educator', 'Comprehensive'],
+        bio: 'Người xây dựng giáo trình Emma Academy. Trực tiếp dạy học phần giải phẫu và Reformer, chủ trì hội đồng chấm thi thực hành của mọi khoá.' },
+      { id: 't2', mono: 'B', name: 'Nguyễn T. B', role: 'Giảng viên', years: '6 năm',
+        quote: 'Học viên nhớ được động tác khi hiểu vì sao phải thở ra đúng lúc ấy.',
+        teach: 'Mat work, thiết kế giáo án', certs: ['Comprehensive', 'Rehab'],
+        bio: 'Phụ trách học phần Mat và thiết kế giáo án. Hướng dẫn học viên dựng lộ trình ba tháng cho từng tình trạng cơ thể.' },
+      { id: 't3', mono: 'K', name: 'HLV 03', role: 'Giảng viên Barre K', years: '4 năm',
+        quote: 'Lớp nhóm hay là khi người đứng cuối phòng cũng thấy mình được chỉnh.',
+        teach: 'Kỹ thuật barre, điều phối lớp nhóm', certs: ['Barre K', 'Mat'],
+        bio: 'Đứng lớp đào tạo chứng chỉ Barre K và kiểm tra chuyên môn định kỳ tại các cơ sở nhượng quyền Barre K.' },
+      { id: 't4', mono: 'T', name: 'HLV 07', role: 'Trợ giảng chính', years: '5 năm',
+        quote: 'Một trăm giờ trợ giảng là để lần đầu đứng lớp, bạn không phải đoán.',
+        teach: 'Giám sát 100 giờ trợ giảng', certs: ['Comprehensive'],
+        bio: 'Xếp lịch và ký xác nhận giờ trợ giảng cho học viên Academy, kèm từng người trong những buổi đứng lớp đầu tiên.' }
     ],
 
     grads: [
@@ -301,6 +313,16 @@
         job: ['Trợ giảng cùng HLV chính', 'Chuẩn bị máy và dụng cụ trước giờ lớp', 'Học khoá HLV Pilates toàn diện'] }
     ]
   };
+
+  /* Câu nói tâm đắc của từng huấn luyện viên (nội dung mẫu, khách cập nhật). */
+  [
+    'Mỗi buổi tập nên có một lý do, và học viên phải biết lý do đó.',
+    'Tôi chỉnh tư thế bằng lời trước, bằng tay sau cùng.',
+    'Nhạc nhanh nhưng động tác phải chậm và đúng.',
+    'Giảm mỡ bền nhất là khi bạn thích quay lại phòng tập.',
+    'Cơ giãn ra được khi hơi thở chậm lại.',
+    'Người mới cần một buổi đầu dễ chịu hơn là một buổi đầu khó.'
+  ].forEach(function (q, i) { if (DATA.coaches[i]) DATA.coaches[i].quote = q; });
 
   /* Đánh giá mẫu cho trang chi tiết máy: khi dựng thật lấy từ WooCommerce. */
   DATA.reviews = [
@@ -445,11 +467,11 @@
       ['Hệ thống chứng chỉ', 'chung-chi', 'Chứng chỉ nào, do ai cấp, điều kiện xét duyệt ra sao.'],
       ['HLV hệ thống', 'hlv-he-thong', 'Đội ngũ giảng viên đứng lớp và chấm thi tốt nghiệp.'],
       ['Học viên tốt nghiệp', 'tot-nghiep', 'Danh sách theo từng khoá và nơi công tác hiện tại.']
-    ].map(function (x) {
-      return '<a class="card rv" href="#/' + x[1] + '" data-route>' +
-        '<h3 class="d4">' + esc(x[0]) + '</h3>' +
-        '<p class="body">' + esc(x[2]) + '</p>' +
-        '<div class="foot"><span class="small">Xem chi tiết</span>' + ARROW + '</div></a>';
+    ].map(function (x, i) {
+      return '<a class="index-row rv" href="#/' + x[1] + '" data-route>' +
+        '<span class="no num">0' + (i + 1) + '</span>' +
+        '<h3 class="d3">' + esc(x[0]) + '</h3>' +
+        '<p class="body">' + esc(x[2]) + '</p>' + ARROW + '</a>';
     }).join(''));
 
     fill('course-rows', DATA.courses.map(function (c, i) {
@@ -469,35 +491,42 @@
         '</div></div></div>';
     }).join(''));
 
-    fill('cert-grid', DATA.certs.map(function (c) {
-      return '<article class="card rv">' +
-        '<h3 class="d3">' + esc(c.t) + '</h3><span class="label">' + esc(c.by) + '</span><p class="body">' + esc(c.c) + '</p>' +
-        '<dl class="dl"><div><dt>Điều kiện</dt><dd>' + esc(c.cond) + '</dd></div>' +
+    fill('cert-grid', DATA.certs.map(function (c, i) {
+      return '<article class="cert rv">' +
+        '<div class="cert-top"><span class="seal" aria-hidden="true">' + esc(c.t.charAt(0)) + '</span>' +
+        '<span class="small">' + esc(c.by) + '</span><span class="num cert-no">Cấp ' + (i + 1) + '</span></div>' +
+        '<h3 class="d3">' + esc(c.t) + '</h3><p class="body">' + esc(c.c) + '</p>' +
+        '<dl class="cert-dl"><div><dt>Điều kiện</dt><dd>' + esc(c.cond) + '</dd></div>' +
         '<div><dt>Giá trị</dt><dd>' + esc(c.val) + '</dd></div></dl></article>';
     }).join(''));
 
     fill('trainer-grid', DATA.trainers.map(function (t) {
-      return '<article class="card rv" style="padding:0">' +
-        '<span class="portrait" style="aspect-ratio:4/3"><span class="mono" aria-hidden="true">' + esc(t.mono) + '</span>' +
+      return '<button class="person rv" type="button" data-info="trainer" data-id="' + t.id + '">' +
+        '<span class="portrait"><span class="mono" aria-hidden="true">' + esc(t.mono) + '</span>' +
         '<span class="ph">Ảnh chân dung</span></span>' +
-        '<span class="info" style="padding:var(--space-md) var(--space-lg) var(--space-lg);display:grid;gap:var(--space-xs)">' +
-        '<span class="ttl d4">' + esc(t.name) + '</span><span class="label">' + esc(t.role) + '</span>' +
-        '<span class="small">' + esc(t.sub) + '</span></span></article>';
+        '<span class="person-body">' +
+          '<span class="ttl">' + esc(t.name) + '</span>' +
+          '<span class="label">' + esc(t.role) + ', ' + esc(t.years) + ' đứng lớp</span>' +
+          '<span class="quote-line">' + esc(t.quote) + '</span>' +
+          '<span class="small">' + esc(t.teach) + '</span>' +
+          '<span class="more">Xem hồ sơ</span>' +
+        '</span></button>';
     }).join(''));
 
-    fill('franchise-grid', DATA.franchises.map(function (f) {
-      return '<article class="card rv">' +
-        '<h3 class="d3">' + esc(f.t) + '</h3><span class="label">' + esc(f.sub) + '</span><p class="body">' + esc(f.d) + '</p>' +
-        '<dl class="dl"><div><dt>Diện tích</dt><dd class="num">' + esc(f.area) + '</dd></div>' +
+    fill('franchise-grid', DATA.franchises.map(function (f, i) {
+      return '<article class="brand-card b' + (i + 1) + ' rv">' +
+        '<div class="brand-top"><h3 class="brand-name">' + esc(f.t) + '</h3><span class="label">' + esc(f.sub) + '</span></div>' +
+        '<div class="brand-body"><p class="body">' + esc(f.d) + '</p>' +
+        '<dl class="contact-dl"><div><dt>Diện tích</dt><dd class="num">' + esc(f.area) + '</dd></div>' +
         '<div><dt>Tổng đầu tư</dt><dd class="num">' + esc(f.inv) + '</dd></div>' +
         '<div><dt>Hoàn vốn</dt><dd class="num">' + esc(f.roi) + '</dd></div></dl>' +
-        '<div class="foot"><a class="btn ghost sm" href="#/' + f.route + '" data-route>Xem mô hình</a>' +
-        '<button class="btn sm" type="button" data-form="nhuong-quyen">Nhận hồ sơ</button></div></article>';
+        '<div class="foot"><a class="btn sm" href="#/' + f.route + '" data-route>Xem mô hình</a>' +
+        '<button class="btn ghost sm" type="button" data-form="nhuong-quyen">Nhận hồ sơ</button></div></div></article>';
     }).join(''));
 
-    fill('benefit-grid', DATA.benefits.map(function (b) {
-      return '<article class="card rv"><h3 class="d4">' + esc(b.t) + '</h3>' +
-        '<p class="body">' + esc(b.d) + '</p></article>';
+    fill('benefit-grid', DATA.benefits.map(function (b, i) {
+      return '<div class="feature rv"><span class="no num">0' + (i + 1) + '</span><h3 class="d4">' + esc(b.t) + '</h3>' +
+        '<p class="body">' + esc(b.d) + '</p></div>';
     }).join(''));
 
     fill('job-list', DATA.jobs.map(function (j) {
@@ -527,58 +556,63 @@
       var el = document.getElementById('p-' + f.route);
       if (!el) return;
       var hid = 'h-' + f.route;
+      var others = DATA.franchises.filter(function (x) { return x !== f; });
       el.setAttribute('aria-labelledby', hid);
       el.innerHTML =
-        '<div class="pagehead"><div class="wrap">' +
+        '<div class="pagehead feature"><canvas class="light" aria-hidden="true"></canvas><div class="wrap">' +
+        '<div class="fh-text">' +
         '<nav class="crumb" aria-label="Đường dẫn"><a href="#/trang-chu" data-route>Trang chủ</a><i>›</i>' +
         '<a href="#/nhuong-quyen" data-route>Nhượng quyền</a><i>›</i><span>' + esc(f.t) + '</span></nav>' +
-        '<h1 class="d2" id="' + hid + '">' + esc(f.t) + '</h1>' +
-        '<p class="body">' + esc(f.d) + '</p>' +
-        '<div class="stats" style="margin-top:var(--space-lg);grid-template-columns:repeat(4,minmax(0,1fr))">' +
-        '<div><b class="num">' + esc(f.area) + '</b><small>Diện tích mặt bằng</small></div>' +
-        '<div><b class="num">' + esc(f.fee) + '</b><small>Phí nhượng quyền</small></div>' +
-        '<div><b class="num">' + esc(f.inv) + '</b><small>Tổng vốn đầu tư</small></div>' +
-        '<div><b class="num">' + esc(f.roi) + '</b><small>Hoàn vốn dự kiến</small></div>' +
+        '<h1 class="d1" id="' + hid + '">' + esc(f.t) + '</h1>' +
+        '<p class="lead">' + esc(f.d) + '</p>' +
+        '<div class="hero-acts"><button class="btn" type="button" data-form="nhuong-quyen">Nhận hồ sơ ' + esc(f.t) + '</button>' +
+        '<a class="btn ghost" href="#' + f.route + '-chi-so">Xem chỉ số vận hành</a></div>' +
         '</div>' +
-        '<div class="anchors" style="margin-top:var(--space-lg)">' +
+        '<dl class="keyfacts" data-cms="Số liệu mô hình">' +
+        '<div><dt>Diện tích mặt bằng</dt><dd class="num">' + esc(f.area) + '</dd></div>' +
+        '<div><dt>Phí nhượng quyền</dt><dd class="num">' + esc(f.fee) + '</dd></div>' +
+        '<div><dt>Tổng vốn đầu tư</dt><dd class="num">' + esc(f.inv) + '</dd></div>' +
+        '<div><dt>Hoàn vốn dự kiến</dt><dd class="num">' + esc(f.roi) + '</dd></div>' +
+        '</dl></div></div>' +
+
+        '<nav class="subnav" aria-label="Mục trong trang"><div class="wrap">' +
         '<a href="#' + f.route + '-mo-hinh">Mô hình</a>' +
         '<a href="#' + f.route + '-chi-so">Chỉ số vận hành</a>' +
         '<a href="#' + f.route + '-lo-trinh">Lộ trình mở</a>' +
         '<a href="#' + f.route + '-hoi-dap">Hỏi đáp</a>' +
-        '</div></div></div>' +
+        '</div></nav>' +
 
         /* --- mô hình --- */
-        '<section class="sec" id="' + f.route + '-mo-hinh"><div class="wrap split">' +
-        '<div class="rv">' +
-        '<h2 class="d3" style="margin-top:var(--space-md)">Dành cho ai</h2>' +
-        '<p class="standfirst" style="margin-top:var(--space-md)">' + esc(f.who) + '</p>' +
-        '<dl class="spec" style="margin-top:var(--space-lg)">' +
+        '<section class="sec" id="' + f.route + '-mo-hinh"><div class="wrap">' +
+        '<div class="split">' +
+        '<div class="rv"><h2 class="d2">Dành cho ai</h2>' +
+        '<p class="statement">' + esc(f.who) + '</p>' +
+        '<dl class="contact-dl">' +
         row('Nhân sự tối thiểu', esc(f.staff)) +
         row('Diện tích', esc(f.area)) +
         row('Phí nhượng quyền', esc(f.fee)) +
         row('Thời hạn hợp đồng', '5 năm, ưu tiên gia hạn cho đối tác đang vận hành tốt') +
         '</dl></div>' +
-        '<div class="rv"><p class="label" style="margin-bottom:var(--space-sm)">Emma chuyển giao</p>' +
-        '<ul class="dashlist">' + f.inc.map(li).join('') + '</ul>' +
-        '<p class="label" style="margin:var(--space-lg) 0 var(--space-sm)">Yêu cầu mặt bằng</p>' +
-        '<ul class="dashlist">' + f.space.map(li).join('') + '</ul>' +
-        '<p class="kicker-note">' + INFO_ICON +
-        '<span><b>Bảo vệ khu vực.</b> Trong thời hạn hợp đồng, Emma không mở cơ sở khác ' +
-        'hay ký đối tác mới trong bán kính đã thoả thuận.</span></p>' +
-        '</div></div></section>' +
+        '<div class="stack rv">' +
+        '<div class="panel-box"><h3 class="d4">Emma chuyển giao</h3><ul class="fitlist">' +
+        f.inc.map(function (x) { return '<li>' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul></div>' +
+        '<div class="panel-box"><h3 class="d4">Yêu cầu mặt bằng</h3><ul class="fitlist">' +
+        f.space.map(function (x) { return '<li>' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul>' +
+        '<p class="callout"><b>Bảo vệ khu vực.</b> Trong thời hạn hợp đồng, Emma không mở cơ sở khác ' +
+        'hay ký đối tác mới trong bán kính đã thoả thuận.</p></div>' +
+        '</div></div></div></section>' +
 
         /* --- chỉ số vận hành --- */
         '<section class="sec band-soft" id="' + f.route + '-chi-so"><div class="wrap">' +
         '<div class="sec-head rv"><div>' +
         '<h2 class="d2">Con số của một cơ sở ' + esc(f.t) + '</h2>' +
         '<p class="body">Lấy từ cơ sở Emma đang vận hành có quy mô tương đương.</p></div></div>' +
-        '<div class="metrics rv" data-cms="Chỉ số vận hành">' +
-        f.rev.map(function (r, i) {
-          return '<div><span class="lb">0' + (i + 1) + '</span><b>' + esc(r[1]) + '</b>' +
-            '<small>' + esc(r[0]) + '</small></div>';
+        '<div class="figures compact rv" data-cms="Chỉ số vận hành">' +
+        f.rev.map(function (r) {
+          return '<div class="figure"><p class="fig-n num">' + esc(r[1]) + '</p><h3 class="d4">' + esc(r[0]) + '</h3></div>';
         }).join('') +
         '</div>' +
-        '<p class="small rv" style="margin-top:var(--space-md)">Con số thực tế thay đổi theo vị trí mặt bằng, ' +
+        '<p class="small rv" style="margin-top:var(--space-lg)">Con số thực tế thay đổi theo vị trí mặt bằng, ' +
         'mức giá vùng và năng lực đội ngũ. Emma tính riêng cho từng mặt bằng trong buổi khảo sát.</p>' +
         '</div></section>' +
 
@@ -588,16 +622,19 @@
         '<h2 class="d2">Từ lúc ký đến ngày khai trương</h2>' +
         '<p class="body">Mốc thời gian dưới đây tính cho mặt bằng đã bàn giao và không vướng cải tạo kết cấu.</p>' +
         '</div></div>' +
-        '<div class="steps rv" data-cms="Lộ trình setup">' +
-        '<div><h3 class="d4">Khảo sát &amp; chốt mặt bằng</h3><p class="body">Emma đo đạc, đánh giá lưu lượng khu vực và dựng dự toán riêng cho vị trí của bạn.</p></div>' +
-        '<div><h3 class="d4">Ký hợp đồng</h3><p class="body">Thống nhất phạm vi độc quyền, phí nhượng quyền và các mốc thanh toán.</p></div>' +
-        '<div><h3 class="d4">Thiết kế &amp; thi công</h3><p class="body">Bản vẽ theo bộ nhận diện, Emma giám sát và nghiệm thu từng hạng mục.</p></div>' +
-        '<div><h3 class="d4">Lắp máy &amp; tuyển nhân sự</h3><p class="body">Thiết bị về cùng lúc với đợt đào tạo huấn luyện viên và lễ tân.</p></div>' +
-        '<div><h3 class="d4">Chạy thử &amp; khai trương</h3><p class="body">Hai tuần bán thẻ sớm và dạy thử trước ngày mở chính thức.</p></div>' +
-        '</div></div></section>' +
+        '<ol class="ladder rv" data-cms="Lộ trình setup">' +
+        [['01', 'Khảo sát &amp; chốt mặt bằng', 'Emma đo đạc, đánh giá lưu lượng khu vực và dựng dự toán riêng cho vị trí của bạn.'],
+         ['02', 'Ký hợp đồng', 'Thống nhất phạm vi độc quyền, phí nhượng quyền và các mốc thanh toán.'],
+         ['03', 'Thiết kế &amp; thi công', 'Bản vẽ theo bộ nhận diện, Emma giám sát và nghiệm thu từng hạng mục.'],
+         ['04', 'Lắp máy &amp; tuyển nhân sự', 'Thiết bị về cùng lúc với đợt đào tạo huấn luyện viên và lễ tân.'],
+         ['05', 'Chạy thử &amp; khai trương', 'Hai tuần bán thẻ sớm và dạy thử trước ngày mở chính thức.']
+        ].map(function (s) {
+          return '<li><span class="step-no num">' + s[0] + '</span><h3 class="d4">' + s[1] + '</h3><p class="body">' + s[2] + '</p></li>';
+        }).join('') +
+        '</ol></div></section>' +
 
         /* --- hỏi đáp --- */
-        '<section class="sec band-sand" id="' + f.route + '-hoi-dap"><div class="wrap">' +
+        '<section class="sec band-soft" id="' + f.route + '-hoi-dap"><div class="wrap faq-split">' +
         '<div class="sec-head rv"><div>' +
         '<h2 class="d2">Đối tác hay hỏi</h2></div></div>' +
         '<div class="faq rv" data-cms="Câu hỏi thường gặp">' +
@@ -611,11 +648,22 @@
                'Họp vận hành hàng tháng, cập nhật giáo án hai lần mỗi năm, đào tạo lại khi có nhân sự mới, và hỗ trợ chiến dịch bán thẻ vào các mùa cao điểm.') +
         '</div></div></section>' +
 
-        '<section class="sec cta"><div class="wrap cta-row">' +
-        '<div>' +
-        '<h2 class="d3" style="margin-block:var(--space-sm) var(--space-sm)">Nhận hồ sơ ' + esc(f.t) + '</h2>' +
+        /* --- hai mô hình còn lại --- */
+        '<section class="sec"><div class="wrap">' +
+        '<div class="sec-head rv"><div><h2 class="d2">Hai mô hình còn lại</h2></div>' +
+        '<a class="btn ghost" href="#/nhuong-quyen" data-route>So sánh cả ba</a></div>' +
+        '<div class="brands two">' + others.map(function (o) {
+          var k = DATA.franchises.indexOf(o) + 1;
+          return '<a class="brand-card mini b' + k + ' rv" href="#/' + o.route + '" data-route>' +
+            '<div class="brand-top"><h3 class="brand-name">' + esc(o.t) + '</h3><span class="label">' + esc(o.sub) + '</span></div>' +
+            '<div class="brand-body"><p class="body">Tổng đầu tư ' + esc(o.inv) + ', hoàn vốn ' + esc(o.roi) + '.</p>' + ARROW + '</div></a>';
+        }).join('') + '</div>' +
+        '</div></section>' +
+
+        '<section class="sec cta deep"><div class="wrap cta-row rv">' +
+        '<div><h2 class="d2">Nhận hồ sơ ' + esc(f.t) + '</h2>' +
         '<p class="body">Gồm mô hình tài chính chi tiết, danh mục thiết bị, bản vẽ mẫu và lộ trình setup.</p></div>' +
-        '<button class="btn" type="button" data-form="nhuong-quyen">Gửi yêu cầu</button>' +
+        '<button class="btn light" type="button" data-form="nhuong-quyen">Gửi yêu cầu</button>' +
         '</div></section>';
     });
   }
@@ -843,8 +891,9 @@
       }).join('');
     }
     fill('grad-grid', DATA.grads.filter(function (g) { return ks === 'Tất cả' || g.k === ks; }).map(function (g) {
-      return '<article class="card rv"><span class="tag">' + esc(g.k) + '</span>' +
-        '<h3 class="d4">' + esc(g.n) + '</h3><p class="small">' + esc(g.w) + '</p></article>';
+      return '<article class="grad rv"><span class="initial" aria-hidden="true">' + esc(g.n.split(' ').pop().charAt(0)) + '</span>' +
+        '<div><h3 class="d4">' + esc(g.n) + '</h3><p class="small">' + esc(g.w) + '</p></div>' +
+        '<span class="tag num">' + esc(g.k) + '</span></article>';
     }).join(''));
   }
 
@@ -872,6 +921,17 @@
       if (empty) empty.hidden = shown > 0;
     });
   })();
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var h = a.getAttribute('href');
+    if (h.length < 2 || h.charAt(1) === '/') return;
+    var t = document.getElementById(h.slice(1));
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  });
 
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-grad]');
@@ -1103,6 +1163,30 @@
   function row(dt, dd) { return '<div><dt>' + dt + '</dt><dd>' + dd + '</dd></div>'; }
 
   var INFO = {
+    trainer: function (id) {
+      var t = byId(DATA.trainers, id);
+      if (!t) return null;
+      return {
+        kicker: t.role, title: t.name, sub: 'Emma Academy, ' + t.years + ' đứng lớp',
+        foot: '',
+        cta: 'dao-tao', ctaText: 'Học cùng giảng viên này',
+        body:
+          '<div class="profile">' +
+            '<span class="portrait"><span class="mono" aria-hidden="true">' + esc(t.mono) + '</span>' +
+            '<span class="ph">Ảnh chân dung</span></span>' +
+            '<div>' +
+              '<div class="meta">' + t.certs.map(function (x) { return '<span class="tag">' + esc(x) + '</span>'; }).join('') + '</div>' +
+              '<blockquote class="pull">' + esc(t.quote) + '</blockquote>' +
+              '<p class="body">' + esc(t.bio) + '</p>' +
+              '<dl class="spec" style="margin-top:var(--space-md)">' +
+                row('Giảng dạy', esc(t.teach)) +
+                row('Vai trò', esc(t.role)) +
+                row('Kinh nghiệm', esc(t.years) + ' đứng lớp') +
+              '</dl>' +
+            '</div>' +
+          '</div>'
+      };
+    },
     coach: function (id) {
       var c = byId(DATA.coaches, id);
       if (!c) return null;
@@ -1118,6 +1202,7 @@
               '<div class="meta">' + c.certs.map(function (x) {
                 return '<span class="tag">' + esc(x) + '</span>';
               }).join('') + '</div>' +
+              (c.quote ? '<blockquote class="pull">' + esc(c.quote) + '</blockquote>' : '') +
               '<p class="body">' + esc(c.bio) + '</p>' +
               '<dl class="spec" style="margin-top:var(--space-md)">' +
                 row('Thế mạnh', esc(c.focus)) +
