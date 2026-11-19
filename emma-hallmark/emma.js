@@ -16,6 +16,7 @@
   };
   var YT = 'https://www.youtube.com/results?search_query=emma+pilates';
   var ARROW = '<span class="arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>';
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 5 5L20 7"/></svg>';
   var li = function (x) { return '<li>' + esc(x) + '</li>'; };
 
   /* ==================================================================== DATA */
@@ -301,6 +302,18 @@
     ]
   };
 
+  /* Đánh giá mẫu cho trang chi tiết máy: khi dựng thật lấy từ WooCommerce. */
+  DATA.reviews = [
+    { n: 'Chị Minh Anh', w: 'Chủ studio, Cầu Giấy', d: '03.10.2026', r: 5,
+      t: 'Máy về đúng hẹn, kỹ thuật lắp và chỉnh lò xo ngay trong buổi chiều. Học viên mới làm quen được sau hai buổi.' },
+    { n: 'Anh Đức', w: 'Huấn luyện viên, Hải Phòng', d: '18.09.2026', r: 5,
+      t: 'Khung chắc, ray chạy êm. Mình dạy sáu tiếng mỗi ngày đã bốn tháng, chưa phải thay dây đai.' },
+    { n: 'Chị Hà', w: 'Tập tại nhà, Long Biên', d: '02.09.2026', r: 4,
+      t: 'Máy đẹp và êm. Trừ một sao vì phải chờ thêm ba ngày do thang máy chung cư nhỏ, Emma khảo sát lại rồi tháo rời để giao.' },
+    { n: 'Lumi Studio', w: 'Đà Nẵng', d: '21.08.2026', r: 5,
+      t: 'Mua bộ bốn máy cho studio mới. Được gửi bản vẽ bố trí phòng trước khi giao nên lắp xong là dùng được ngay.' }
+  ];
+
   var byId = function (list, id) {
     for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
     return null;
@@ -349,14 +362,14 @@
 
   function pillarCards() {
     return '<article class="card rv">' +
-      '<h3 class="d3">Pilates</h3><span class="label">Trụ cột 1</span>' +
+      '<h3 class="d3">Pilates</h3>' +
       '<p class="body">Reformer, Cadillac, Wunda Chair, Ladder Barrel và Mat. Giáo án cá nhân hoá theo kết quả đo body đầu vào.</p>' +
       '<div class="tags"><span class="chip">HLV 1:1</span><span class="chip">HLV 1:2</span><span class="chip">Nhóm 1:3</span>' +
       '<span class="chip">Bầu &amp; sau sinh</span><span class="chip">Cải thiện bệnh lý</span></div>' +
       '<div class="foot"><span class="price num">Từ 450.000₫ / buổi</span>' +
       '<a class="btn sm" href="#/pilates" data-route>Xem Pilates</a></div></article>' +
       '<article class="card rv">' +
-      '<h3 class="d3">Fitness</h3><span class="label">Trụ cột 2, Gym và Barre gộp chung</span>' +
+      '<h3 class="d3">Fitness</h3>' +
       '<p class="body">Barre, Gym, Boxing và Stretching nằm chung một nhóm dịch vụ, dùng chung thẻ tập và chung HLV theo dõi lộ trình.</p>' +
       '<div class="tags"><span class="chip">Barre 1:1 &amp; lớp nhóm</span><span class="chip">Gym PT 1:1</span>' +
       '<span class="chip">Gym PT 1:2</span><span class="chip">Boxing PT 1:1</span><span class="chip">Stretching PT 1:1</span></div>' +
@@ -384,13 +397,15 @@
     }).join(''));
 
     fill('branch-detail', DATA.branches.map(function (b) {
-      return '<article class="card rv">' +
-        '<h3 class="d3">' + esc(b.name) + '</h3><span class="label">' + esc(b.cs) + '</span><p class="body">' + esc(b.addr) + '</p>' +
-        '<dl class="dl"><div><dt>Phòng tập</dt><dd>' + esc(b.rooms) + '</dd></div>' +
-        '<div><dt>Giờ mở cửa</dt><dd>' + esc(b.open) + '</dd></div>' +
-        '<div><dt>Hotline</dt><dd><a class="link" href="tel:0938831661">0938 831 661</a></dd></div></dl>' +
-        '<div class="foot"><span class="small">Bản đồ nhúng khi lên web thật</span>' +
-        '<button class="btn sm" type="button" data-form="tham-quan">Đặt lịch</button></div></article>';
+      return '<article class="card contact rv">' +
+        '<div class="contact-head"><h3 class="d3">' + esc(b.name) + '</h3><span class="label">' + esc(b.cs) + '</span></div>' +
+        '<p class="addr">' + esc(b.addr) + '</p>' +
+        '<dl class="contact-dl">' +
+        '<div><dt>Giờ mở cửa</dt><dd>' + esc(b.open).replace(', ', '<br>') + '</dd></div>' +
+        '<div><dt>Hotline</dt><dd><a class="link" href="tel:0938831661">0938 831 661</a></dd></div>' +
+        '<div><dt>Phòng tập</dt><dd>' + esc(b.rooms) + '</dd></div></dl>' +
+        '<div class="foot"><a class="btn ghost sm" href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(b.addr) + '" target="_blank" rel="noopener">Chỉ đường</a>' +
+        '<button class="btn sm" type="button" data-form="tham-quan">Đặt lịch tham quan</button></div></article>';
     }).join(''));
 
     fill('coach-home', DATA.coaches.slice(0, 4).map(coachCard).join(''));
@@ -409,10 +424,10 @@
         '<button class="hd" type="button" aria-expanded="' + (i === 0) + '" aria-controls="' + id + '">' +
         '<span class="no">' + esc(g.no) + '</span><span class="ttl">' + esc(g.t) + '</span>' + ARROW + '</button>' +
         '<div class="bd" id="' + id + '"><div class="bd-in">' +
-        '<p class="body">' + esc(g.d) + '</p>' +
-        '<div class="side"><div class="tags">' +
-        g.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
-        '<button class="btn sm" type="button" data-form="tap-thu">Đăng ký tập thử</button></div>' +
+        '<div><p class="body">' + esc(g.d) + '</p>' +
+        '<button class="btn sm" type="button" data-form="tap-thu" style="margin-top:var(--space-lg)">Đăng ký tập thử</button></div>' +
+        '<div class="side"><p class="label">Phù hợp khi bạn có</p><ul class="fitlist">' +
+        g.tags.map(function (t) { return '<li>' + CHECK + '<span>' + esc(t) + '</span></li>'; }).join('') + '</ul></div>' +
         '</div></div></div>';
     }).join(''));
 
@@ -432,9 +447,9 @@
       ['Học viên tốt nghiệp', 'tot-nghiep', 'Danh sách theo từng khoá và nơi công tác hiện tại.']
     ].map(function (x) {
       return '<a class="card rv" href="#/' + x[1] + '" data-route>' +
-        '<h3 class="d4">' + esc(x[0]) + '</h3><span class="label">Thư mục con</span>' +
+        '<h3 class="d4">' + esc(x[0]) + '</h3>' +
         '<p class="body">' + esc(x[2]) + '</p>' +
-        '<div class="foot"><span class="small">Xem trang</span>' + ARROW + '</div></a>';
+        '<div class="foot"><span class="small">Xem chi tiết</span>' + ARROW + '</div></a>';
     }).join(''));
 
     fill('course-rows', DATA.courses.map(function (c, i) {
@@ -556,8 +571,7 @@
         '<section class="sec band-soft" id="' + f.route + '-chi-so"><div class="wrap">' +
         '<div class="sec-head rv"><div>' +
         '<h2 class="d2">Con số của một cơ sở ' + esc(f.t) + '</h2>' +
-        '<p class="body">Lấy từ cơ sở Emma đang vận hành có quy mô tương đương. ' +
-        '<span class="hl">Số liệu mẫu dựng giao diện</span>, chờ bảng tài chính chính thức.</p></div></div>' +
+        '<p class="body">Lấy từ cơ sở Emma đang vận hành có quy mô tương đương.</p></div></div>' +
         '<div class="metrics rv" data-cms="Chỉ số vận hành">' +
         f.rev.map(function (r, i) {
           return '<div><span class="lb">0' + (i + 1) + '</span><b>' + esc(r[1]) + '</b>' +
@@ -609,9 +623,24 @@
   var INFO_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/>' +
     '<path d="M12 11v5M12 7.6v.4"/></svg>';
 
+  /* sao đánh giá: số sao tô theo điểm, phần còn lại để nhạt */
+  var STAR = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.8l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L10 14.4l-5.1 2.8 1.1-5.6L1.8 7.7l5.7-.7z"/></svg>';
+  function stars(v) {
+    var out = '<span class="stars" role="img" aria-label="' + String(v).replace('.', ',') + ' trên 5 sao">';
+    for (var i = 1; i <= 5; i++) out += '<i class="' + (v >= i - 0.25 ? 'on' : 'off') + '">' + STAR + '</i>';
+    return out + '</span>';
+  }
+  function reviewsFor() {
+    var list = DATA.reviews, sum = 0, count = {};
+    list.forEach(function (r) { sum += r.r; count[r.r] = (count[r.r] || 0) + 1; });
+    var avg = Math.round(sum / list.length * 10) / 10;
+    return { list: list, count: count, avg: avg, avgText: avg.toFixed(1).replace('.', ',') };
+  }
+
   function buildProduct(id) {
     var el = document.getElementById('p-san-pham');
     var m = byId(DATA.machines, id) || DATA.machines[0];
+    var rv = reviewsFor();
     var related = DATA.machines.filter(function (x) { return x.id !== m.id; }).slice(0, 4);
     var views = ['Góc nghiêng', 'Chi tiết lò xo', 'Khi đang tập'];
     el.setAttribute('aria-labelledby', 'h-product');
@@ -636,8 +665,10 @@
 
       '<div class="rv">' +
         '' +
-        '<h1 class="d2" id="h-product" style="margin:var(--space-sm) 0 var(--space-sm)">' + esc(m.name) + '</h1>' +
-        '<p class="body">' + esc(m.note) + '</p>' +
+        '<h1 class="d2" id="h-product">' + esc(m.name) + '</h1>' +
+        '<p class="label">' + esc(m.origin) + ', mã ' + esc(m.sku) + '</p>' +
+        '<button class="rating-link" type="button">' + stars(rv.avg) + '<span><b class="num">' + rv.avgText + '</b> trên 5, ' + rv.list.length + ' đánh giá</span></button>' +
+        '<p class="body prod-note">' + esc(m.note) + '</p>' +
 
         '<div class="buybox" style="margin-top:var(--space-lg)" data-cms="Giá &amp; tồn kho">' +
           '<div>' +
@@ -645,8 +676,7 @@
             '<span class="was">' + esc(m.was) + '</span><span class="tag">' + esc(m.off) + '</span></div>' +
             '<p class="vat" style="margin:var(--space-xs) 0 0">Giá đã gồm VAT, chưa gồm phí vận chuyển ngoài Hà Nội và Hải Phòng.</p>' +
           '</div>' +
-          '<div class="qty"><span class="stock"><i aria-hidden="true"></i>' + esc(m.stock) + '</span>' +
-          '<span>Mã máy ' + esc(m.sku) + '</span></div>' +
+          '<div class="qty"><span class="stock">' + esc(m.stock) + '</span></div>' +
           '<hr>' +
           '<p class="small" style="margin:0"><b style="color:var(--color-ink)">Mua từ 3 máy</b> có mức giá riêng cho studio mở mới, kèm khảo sát mặt bằng trước khi giao.</p>' +
           '<div class="hero-acts" style="margin-top:0">' +
@@ -655,9 +685,9 @@
           '</div>' +
         '</div>' +
 
-        '<dl class="spec" style="margin-top:var(--space-lg)">' +
+        '<dl class="facts">' +
           row('Kích thước', esc(m.size)) + row('Trọng lượng', esc(m.weight)) +
-          row('Tải trọng', esc(m.cap)) + row('Thời gian giao', esc(m.lead)) +
+          row('Tải trọng', esc(m.cap)) + row('Giao hàng', esc(m.lead)) +
         '</dl>' +
       '</div></div></section>' +
 
@@ -720,6 +750,30 @@
         '</div>' +
       '</div></section>' +
 
+      /* --- đánh giá (WooCommerce khi dựng thật) --- */
+      '<section class="sec" id="prod-reviews"><div class="wrap">' +
+        '<div class="sec-head rv"><div><h2 class="d2">Đánh giá từ người đã mua</h2>' +
+        '<p class="body">Nội dung mẫu để dựng giao diện. Khi lên WordPress, phần này lấy từ đánh giá WooCommerce của khách đã nhận máy.</p></div></div>' +
+        '<div class="reviews rv" data-cms="Đánh giá sản phẩm (WooCommerce)">' +
+          '<div class="rv-summary">' +
+            '<p class="rv-avg num">' + rv.avgText + '</p>' + stars(rv.avg) +
+            '<p class="small">' + rv.list.length + ' đánh giá</p>' +
+            '<ul class="rv-bars">' + [5, 4, 3, 2, 1].map(function (k) {
+              var n = rv.count[k] || 0, pc = Math.round(n / rv.list.length * 100);
+              return '<li><span class="num">' + k + ' sao</span><span class="bar"><i style="width:' + pc + '%"></i></span><span class="num">' + n + '</span></li>';
+            }).join('') + '</ul>' +
+            '<button class="btn ghost sm" type="button" data-form="may-tap">Hỏi thêm về máy này</button>' +
+          '</div>' +
+          '<ul class="rv-list">' + rv.list.map(function (r) {
+            return '<li class="rv-card">' +
+              '<div class="rv-top">' + stars(r.r) + '<span class="small num">' + esc(r.d) + '</span></div>' +
+              '<p class="rv-text">' + esc(r.t) + '</p>' +
+              '<p class="rv-who"><b>' + esc(r.n) + '</b><span>' + esc(r.w) + '</span><span class="tag">Đã mua hàng</span></p>' +
+            '</li>';
+          }).join('') + '</ul>' +
+        '</div>' +
+      '</div></section>' +
+
       /* --- sản phẩm liên quan --- */
       '<section class="sec"><div class="wrap">' +
       '<div class="sec-head rv"><div>' +
@@ -737,6 +791,11 @@
       '</div></section>';
 
     tabs(el);
+    var rl = $('.rating-link', el);
+    if (rl) rl.addEventListener('click', function () {
+      var t = document.getElementById('prod-reviews');
+      if (t) t.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
   }
 
   /* Tab thông tin sản phẩm: bấm để đổi bảng, bàn phím trái/phải để chuyển. */
@@ -1049,7 +1108,7 @@
       if (!c) return null;
       return {
         kicker: c.role, title: c.name, sub: c.branch + ', ' + c.years + ' kinh nghiệm',
-        foot: 'Tên, ảnh và chứng chỉ là nội dung mẫu, chờ khách cập nhật.',
+        foot: '',
         cta: 'tap-thu', ctaText: 'Đặt lịch với huấn luyện viên này',
         body:
           '<div class="profile">' +
@@ -1082,7 +1141,7 @@
     $('#info-body').innerHTML = d.body;
     $('#info-foot').textContent = d.foot;
     var cta = $('#info-cta');
-    cta.innerHTML = esc(d.ctaText) + ' <span class="ar">\u2192</span>';
+    cta.textContent = d.ctaText;
     cta.dataset.form = d.cta;
     if (!infoDlg.open) infoDlg.showModal();
   }
