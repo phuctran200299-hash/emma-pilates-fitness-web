@@ -111,27 +111,27 @@
     ],
 
     videos: [
-      { t: '10 phút Pilates buổi sáng cho người ngồi nhiều', m: '10:24', k: 'Bài tập' },
-      { t: 'Reformer cho người mới: 5 động tác đầu tiên', m: '14:08', k: 'Hướng dẫn' },
-      { t: 'Học viên sau 12 tuần: thay đổi tư thế lưng trên', m: '06:52', k: 'Học viên' },
-      { t: 'Barre K: bài tập chân 20 phút tại nhà', m: '20:11', k: 'Bài tập' },
-      { t: 'Giãn cơ vai gáy sau 8 tiếng làm việc', m: '08:40', k: 'Hướng dẫn' }
+      { t: '10 phút Pilates buổi sáng cho người ngồi nhiều', m: '10:24', k: 'Bài tập', img: 'assets/ph-1.jpg', pos: '50% 40%' },
+      { t: 'Reformer cho người mới: 5 động tác đầu tiên', m: '14:08', k: 'Hướng dẫn', img: 'assets/ph-3.jpg', pos: '50% 62%' },
+      { t: 'Học viên sau 12 tuần: thay đổi tư thế lưng trên', m: '06:52', k: 'Học viên', img: 'assets/ph-4.jpg', pos: '50% 45%' },
+      { t: 'Barre K: bài tập chân 20 phút tại nhà', m: '20:11', k: 'Bài tập', img: 'assets/ph-5.jpg', pos: '50% 35%' },
+      { t: 'Giãn cơ vai gáy sau 8 tiếng làm việc', m: '08:40', k: 'Hướng dẫn', img: 'assets/ph-6.jpg', pos: '50% 55%' }
     ],
 
     posts: [
-      { d: '18.09', k: 'Pilates', t: 'Pilates giúp tăng hệ miễn dịch như thế nào?',
+      { d: '18.09', k: 'Pilates', t: 'Pilates giúp tăng hệ miễn dịch như thế nào?', r: 6, img: 'assets/ph-2.jpg', pos: '50% 55%',
         s: 'Hô hấp sâu và vận động biên độ lớn tác động trực tiếp đến tuần hoàn bạch huyết: cơ chế đằng sau cảm giác “nhẹ người” sau mỗi buổi tập.' },
-      { d: '02.09', k: 'Bài tập', t: 'Khắc phục chân vòng kiềng bằng 5 bài tập chân',
+      { d: '02.09', k: 'Bài tập', t: 'Khắc phục chân vòng kiềng bằng 5 bài tập chân', r: 8, img: 'assets/ph-1.jpg', pos: '50% 45%',
         s: 'Năm động tác Health Coach của Emma dùng trong 4 tuần đầu cho học viên có chân vòng kiềng nhẹ.' },
-      { d: '21.08', k: 'Bài tập', t: 'Pilates original Matwork: Corkscrew',
+      { d: '21.08', k: 'Bài tập', t: 'Pilates original Matwork: Corkscrew', r: 5, img: 'assets/form-pilates.jpg', pos: '50% 40%',
         s: 'Động tác Corkscrew nguyên bản trong Return to Life through Contrology, kèm hai biến thể dễ hơn cho người mới.' },
-      { d: '09.08', k: 'Sức khoẻ', t: 'Đau lưng dưới khi ngồi lâu: tập gì và tránh gì',
+      { d: '09.08', k: 'Sức khoẻ', t: 'Đau lưng dưới khi ngồi lâu: tập gì và tránh gì', r: 7, img: 'assets/ph-6.jpg', pos: '50% 55%',
         s: 'Vì sao gập bụng truyền thống làm cơn đau nặng thêm, và nhóm cơ nào mới thực sự cần khoẻ lên.' },
-      { d: '28.07', k: 'Dinh dưỡng', t: 'Ăn gì trước và sau buổi Pilates 55 phút',
+      { d: '28.07', k: 'Dinh dưỡng', t: 'Ăn gì trước và sau buổi Pilates 55 phút', r: 4, img: 'assets/ph-5.jpg', pos: '50% 35%',
         s: 'Khung giờ ăn và lượng đạm tối thiểu cho buổi tập sáng sớm, theo tư vấn của Health Coach.' },
-      { d: '15.07', k: 'Sức khoẻ', t: 'Pilates sau sinh: bắt đầu từ tuần thứ mấy?',
+      { d: '15.07', k: 'Sức khoẻ', t: 'Pilates sau sinh: bắt đầu từ tuần thứ mấy?', r: 6, img: 'assets/ph-4.jpg', pos: '50% 40%',
         s: 'Mốc thời gian an toàn với sinh thường và sinh mổ, cùng các dấu hiệu cần dừng tập ngay.' },
-      { d: '30.06', k: 'Pilates', t: 'Reformer khác Mat ở điểm nào?',
+      { d: '30.06', k: 'Pilates', t: 'Reformer khác Mat ở điểm nào?', r: 5, img: 'assets/ph-3.jpg', pos: '50% 60%',
         s: 'So sánh lực kháng, độ an toàn và tốc độ tiến bộ giữa hai hình thức tập phổ biến nhất.' }
     ],
 
@@ -360,11 +360,43 @@
       '</span></button>';
   }
 
+  function shot(img, pos, alt) {
+    return '<img src="' + img + '" alt="' + esc(alt || '') + '" loading="lazy" style="object-position:' + (pos || '50% 50%') + '">';
+  }
+
   function videoCard(v) {
     return '<a class="vid rv" href="' + YT + '" target="_blank" rel="noopener">' +
-      '<span class="frame"><span class="play"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg></span></span>' +
-      '<span class="cap"><span class="tag">' + esc(v.k) + '</span><b>' + esc(v.t) + '</b>' +
-      '<span class="small num">' + esc(v.m) + ', Mở trên YouTube</span></span></a>';
+      '<span class="frame">' + shot(v.img, v.pos) +
+      '<span class="vk">' + esc(v.k) + '</span>' +
+      '<span class="play"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z"/></svg></span>' +
+      '<span class="dur num">' + esc(v.m) + '</span></span>' +
+      '<span class="cap"><b>' + esc(v.t) + '</b>' +
+      '<span class="yt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>Xem trên YouTube</span></span></a>';
+  }
+
+  /* thẻ bài viết có ảnh, dùng ở trang Tin tức */
+  function postCard(p) {
+    return '<a class="pcard rv" href="#/tin-tuc" data-topic="' + esc(p.k) + '">' +
+      '<span class="pimg">' + shot(p.img, p.pos) + '</span>' +
+      '<span class="pmeta"><span class="pk">' + esc(p.k) + '</span><span class="num">' + esc(p.d) + ' · ' + p.r + ' phút đọc</span></span>' +
+      '<h3>' + esc(p.t) + '</h3><p>' + esc(p.s) + '</p></a>';
+  }
+
+  function postFeature(list) {
+    var f = list[0];
+    var top = list.slice(1, 5);
+    return '<a class="pfeat rv" href="#/tin-tuc">' +
+        '<span class="pimg">' + shot(f.img, f.pos) + '</span>' +
+        '<span class="pfeat-body"><span class="pmeta"><span class="pk">Bài nổi bật · ' + esc(f.k) + '</span><span class="num">' + esc(f.d) + ' · ' + f.r + ' phút đọc</span></span>' +
+        '<h2>' + esc(f.t) + '</h2><p>' + esc(f.s) + '</p>' +
+        '<span class="more">Đọc bài viết ' + ARROW + '</span></span></a>' +
+      '<aside class="ptop rv" aria-labelledby="h-top"><h2 id="h-top">Đọc nhiều nhất</h2><ol>' +
+        top.map(function (p, i) {
+          return '<li><a href="#/tin-tuc"><span class="n num">0' + (i + 1) + '</span>' +
+            '<span><span class="pk">' + esc(p.k) + '</span><b>' + esc(p.t) + '</b>' +
+            '<span class="small num">' + p.r + ' phút đọc</span></span></a></li>';
+        }).join('') +
+      '</ol></aside>';
   }
 
   function postRow(p) {
@@ -435,7 +467,8 @@
     fill('video-home', DATA.videos.slice(0, 3).map(videoCard).join(''));
     fill('video-rail', DATA.videos.map(videoCard).join(''));
     fill('post-home', DATA.posts.slice(0, 3).map(postRow).join(''));
-    fill('post-all', DATA.posts.map(postRow).join(''));
+    fill('post-feature', postFeature(DATA.posts));
+    fill('post-all', DATA.posts.slice(1).map(postCard).join(''));
 
     fill('svc-pilates', DATA.pilates.map(svcCard).join(''));
     fill('svc-fitness', DATA.fitness.map(svcCard).join(''));
@@ -913,7 +946,7 @@
       if (!b) return;
       $$('[data-topic]', bar).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
       var t = b.dataset.topic, shown = 0;
-      $$('.post', list).forEach(function (row) {
+      $$('[data-topic]', list).forEach(function (row) {
         var ok = t === 'Tất cả' || row.dataset.topic === t;
         row.hidden = !ok;
         if (ok) shown++;
@@ -1078,7 +1111,7 @@
     giu: ['Giữ ưu đãi 7 ngày', 'Chưa cần quyết định ngay trong buổi đầu'],
     gia: ['Bảng giá đầy đủ', 'Cả Pilates, Fitness và gói kết hợp'],
     uud: ['Ưu đãi đang chạy', 'Mức giảm theo từng gói, cập nhật trong tháng'],
-    tuv: ['Tư vấn không ép mua', 'Chọn gói hợp ngân sách, không gọi làm phiền'],
+    tuv: ['Lộ trình theo mục tiêu', 'Gợi ý gói hợp lịch rảnh và ngân sách'],
     hos: ['Hồ sơ nhượng quyền', 'Mô hình tài chính và danh mục thiết bị'],
     kha: ['Khảo sát mặt bằng', 'Đánh giá vị trí bạn đang cân nhắc'],
     set: ['Lộ trình setup', 'Từ thiết kế, lắp máy đến khai trương'],
