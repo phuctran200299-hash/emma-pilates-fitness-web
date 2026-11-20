@@ -959,6 +959,35 @@ canvas.light { position: absolute; inset: 0; width: 100%; height: 100%; z-index:
 .fx .rv + .rv + .rv + .rv { transition-delay: .21s; }
 .fx .rv + .rv + .rv + .rv + .rv { transition-delay: .28s; }
 
+/* ---------- home: expanded about block (copy + photo pair + value cards) ---------- */
+.about-x { padding-block: var(--space-3xl); }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3xl); align-items: center; }
+.about-copy { display: flex; flex-direction: column; gap: var(--space-lg); }
+.about-copy .d2 { max-width: 12ch; }
+.about-copy .lead { max-width: 34ch; }
+.about-copy .body { max-width: 58ch; }
+.about-copy .body + .body { margin-top: calc(var(--space-sm) - var(--space-lg)); }
+.about-acts { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-xs); }
+.about-media { position: relative; padding: 0 0 var(--space-2xl) var(--space-2xl); }
+.about-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.am-main { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius-card); background: var(--color-shade); box-shadow: var(--shadow-cast); }
+.am-main img { object-position: 50% 40%; }
+.am-sub { position: absolute; left: 0; bottom: 0; width: 44%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius-card); background: var(--color-shade); border: 6px solid var(--color-paper); box-shadow: var(--shadow-card); }
+.am-sub img { object-position: 50% 62%; }
+.about-values { margin-top: var(--space-3xl); padding-top: 0; border-top: 0; gap: var(--space-md); }
+.about-values .value { padding: var(--space-lg); border-radius: var(--radius-card); background: var(--color-light); box-shadow: var(--edge-light), inset 0 0 0 var(--rule-hair) var(--color-rule); }
+.about-values .value h3 { font-size: var(--text-lg); font-weight: 500; line-height: 1.3; }
+@media (max-width: 1080px) {
+  .about-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xl); }
+  .about-media { max-width: 560px; }
+  .about-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .about-x { padding-block: var(--space-2xl); }
+  .about-media { padding: 0 0 var(--space-xl) var(--space-xl); }
+  .about-values { grid-template-columns: minmax(0, 1fr); margin-top: var(--space-2xl); }
+}
+
 /* ---------- lead form: photo of a class under the offer copy ---------- */
 #formDialog .dlg-aside { background: oklch(30% 0.03 60) url("assets/form-pilates.jpg") center 30% / cover no-repeat; color: var(--color-light); }
 #formDialog .dlg-aside .light { display: none; }

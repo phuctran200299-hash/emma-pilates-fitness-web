@@ -440,7 +440,6 @@
     fill('machine-all', m);
     fill('machine-pilates', DATA.machines.slice(0, 4).map(machineCard).join(''));
 
-    fill('home-pillars', pillarCards());
     fill('svc-pillars', pillarCards());
 
     fill('branch-home', DATA.branches.map(function (b) {
